@@ -50,7 +50,7 @@ public class Analysis extends HttpServlet {
 			
 			dao = new AnalysisDao();
 			try {
-				margins = dao.getOrders();
+				margins = dao.getOrders(); 
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
