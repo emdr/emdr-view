@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="us">
+<head>
+<meta charset="utf-8">
+<title>Margin</title>
+<link href="jquery-ui.css" rel="stylesheet">
+<style>
+body {
+	font: 62.5% "Trebuchet MS", sans-serif;
+	margin: 50px;
+}
+
+.emdrHeaders {
+	margin-top: 2em;
+}
+
+#dialog-link {
+	padding: .4em 1em .4em 20px;
+	text-decoration: none;
+	position: relative;
+}
+
+#dialog-link span.ui-icon {
+	margin: 0 5px 0 0;
+	position: absolute;
+	left: .2em;
+	top: 50%;
+	margin-top: -8px;
+}
+
+#icons {
+	margin: 0;
+	padding: 0;
+}
+
+#icons li {
+	margin: 2px;
+	position: relative;
+	padding: 4px 0;
+	cursor: pointer;
+	float: left;
+	list-style: none;
+}
+
+#icons span.ui-icon {
+	float: left;
+	margin: 0 4px;
+}
+
+.fakewindowcontain .ui-widget-overlay {
+	position: absolute;
+}
+
+select {
+	width: 200px;
+}
+</style>
+<script src="external/jquery/jquery.js"></script>
+</head>
+<body>
+<!-- Tabs -->
+<div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">margins</a></li>
+		<li><a href="#tabs-2">station to station</a></li>
+		<li><a href="#tabs-3">history trends</a></li>
+		<li><a href="Stations">history trends</a></li>
+	</ul>
+	<div id="tabs-1"><table id="martable">
+    <tr>
+        <th>Station</th>
+        <th>Margin</th>
+    </tr>
+</table>
+<script>
+$.ajax({    
+type: "GET",
+url: "Analysis",
+dataType: "json", 
+success: function(response){
+	var data = {};
+	data.d = response;
+	var html = '';
+	for(var key in data.d)
+	    html += '<tr><td>' + key + '</td><td>' + data.d[key].toFixed(2) + '</td></tr>';
+	$('#martable tr').first().after(html);
+}
+});
+</script></div>
+	<div id="tabs-2">Phasellus mattis tincidunt nibh. Cras orci urna, blandit id, pretium vel, aliquet ornare, felis. Maecenas scelerisque sem non nisl. Fusce sed lorem in enim dictum bibendum.</div>
+	<div id="tabs-3">Nam dui erat, auctor a, dignissim quis, sollicitudin eu, felis. Pellentesque nisi urna, interdum eget, sagittis et, consequat vestibulum, lacus. Mauris porttitor ullamcorper augue.</div>
+</div>
+<script src="jquery-ui.js"></script>
+
+	<script type="text/javascript">
+		$( "#tabs" ).tabs();
+		$(document).ready(function() {
+		});
+	</script>
+</body>
+</html>
