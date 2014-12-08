@@ -35,12 +35,7 @@ public class Analysis extends HttpServlet {
 
 		@Override
 		public void init() throws ServletException {
-			dao = new AnalysisDao();
-			try {
-				margins = dao.getOrders();
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
+			
 		}
 
 		/**
@@ -51,7 +46,14 @@ public class Analysis extends HttpServlet {
 				HttpServletResponse response) throws ServletException, IOException {
 			// Set a cookie for the user
 //			HttpSession session = request.getSession(true);
-
+			String id = request.getParameter("Station");
+			
+			dao = new AnalysisDao();
+			try {
+				margins = dao.getOrders();
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
 			response.setContentType("application/json");
 			PrintWriter out = response.getWriter();
 

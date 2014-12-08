@@ -17,10 +17,10 @@ public class AnalysisDao {
 		private Statement stmt = null;
 		
 		public Map getOrders() throws Exception{
-			return getOrders("60003760", "2000", "'2014-09-09'");
+			return getOrders("60003760");
 		}
 		
-		public Map getOrders( String stationID, String quantity, String date) throws Exception {
+		public Map getOrders( String stationID) throws Exception {
 			Map margins = new HashMap();
 			
 			Class.forName("com.mysql.jdbc.Driver");
@@ -33,7 +33,7 @@ public class AnalysisDao {
 							" FROM items_selling"+
 							" JOIN items_buying ON items_selling.type_id = items_buying.type_id AND items_selling.station_id = items_buying.station_id"+
 							" JOIN items_history ON items_selling.type_id = items_history.type_id" +
-							" WHERE items_selling.station_id = " + stationID + " AND items_history.quantity > " + quantity + " AND items_history.date = "+ date +
+							" WHERE items_selling.station_id = " + stationID + " AND items_history.quantity > 200 AND items_history.date = '2014-09-09'"+
 							" GROUP BY items_selling.type_id ORDER BY Margin DESC LIMIT 10;";
 			
 			//System.out.println(query);
