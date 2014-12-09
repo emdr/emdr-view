@@ -68,6 +68,20 @@ $.ajax({
 	dataType: "json", 
 	success: function(response){
 		items.d = response;
+		$.ajax({
+			type: "GET",
+			url: "PriceHistory",
+			dataType: "json", 
+			success: function(response){
+				var data = {};
+				data.d = response;
+				var html = '';
+				for(var key in data.d)
+				    html += '<tr><td>' + items.d[key] + '</td><td>' + data.d[key].toFixed(2) + '</td></tr>';
+				$('#histtable tr').first().after(html);
+			}
+			});
+
 	}
 	});
 </script>
@@ -77,11 +91,11 @@ $.ajax({
 		<li><a href="#tabs-1">in station</a></li>
 		<li><a href="#tabs-2">multi station</a></li>
 		<li><a href="#tabs-3">item history</a></li>
-		<li><a href="Stations">history trends</a></li>
+		<li><a href="#tabs-4">history trends</a></li>
 	</ul>
 	<div id="tabs-1"><table id="martable">
     <tr>
-        <th>Station</th>
+        <th>Item</th>
         <th>Margin</th>
     </tr>
 </table>
@@ -100,7 +114,28 @@ success: function(response){
 }
 });
 </script></div>
-	<div id="tabs-2">Phasellus mattis tincidunt nibh. Cras orci urna, blandit id, pretium vel, aliquet ornare, felis. Maecenas scelerisque sem non nisl. Fusce sed lorem in enim dictum bibendum.</div>
+	<div id="tabs-2"><table id="stattable">
+    <tr>
+        <th>Item</th>
+        <th>Margin</th>
+    </tr>
+</table>
+<script>
+$.ajax({
+type: "GET",
+url: "MultiStation",
+dataType: "json", 
+success: function(response){
+	var data = {};
+	data.d = response;
+	var html = '';
+	for(var key in data.d)
+	    html += '<tr><td>' + items.d[key] + '</td><td>' + data.d[key].toFixed(2) + '</td></tr>';
+	$('#stattable tr').first().after(html);
+}
+});
+</script>
+</div>
 	<div id="tabs-3"><div id="jstree_items_div"><script>
 $.ajax({
 type: "GET",
@@ -114,6 +149,15 @@ success: function(response){
 }
 });
 </script></div>
+</div>
+<div id="tabs-4"><table id="histtable">
+    <tr>
+        <th>Item</th>
+        <th>Rate</th>
+    </tr>
+</table>
+<script>
+</script>
 </div>
 </div>
 <script src="jquery-ui.js"></script>
