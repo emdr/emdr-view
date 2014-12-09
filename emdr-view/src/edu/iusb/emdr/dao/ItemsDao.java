@@ -22,6 +22,7 @@ public class ItemsDao {
 		stmt = conn.createStatement();
 		boolean executed = stmt.execute(
 				"SELECT type_id, name FROM emdr.eve_inv_types "
+				+ "WHERE marketgroup_id IS NOT NULL "
 				+ "ORDER BY type_id");
 		if (!executed) {
 			stmt.close();
@@ -49,6 +50,7 @@ public class ItemsDao {
 		stmt = conn.createStatement();
 		boolean executed = stmt.execute(
 				"SELECT type_id, name FROM emdr.eve_inv_types "
+				+ "WHERE marketgroup_id IS NOT NULL "
 				+ "ORDER BY type_id");
 		if (!executed) {
 			stmt.close();
