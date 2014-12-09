@@ -61,6 +61,10 @@ select {
 </head>
 <body>
 <script>
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 var items = {};
 $.ajax({    
 	type: "GET",
@@ -109,7 +113,7 @@ success: function(response){
 	data.d = response;
 	var html = '';
 	for(var key in data.d)
-	    html += '<tr><td>' + items.d[key] + '</td><td>' + data.d[key].toFixed(2) + '</td></tr>';
+	    html += '<tr><td>' + items.d[key] + '</td><td>' + numberWithCommas(data.d[key].toFixed(2)) + '</td></tr>';
 	$('#martable tr').first().after(html);
 }
 });
@@ -130,7 +134,7 @@ success: function(response){
 	data.d = response;
 	var html = '';
 	for(var key in data.d)
-	    html += '<tr><td>' + items.d[key] + '</td><td>' + data.d[key].toFixed(2) + '</td></tr>';
+	    html += '<tr><td>' + items.d[key] + '</td><td>' + numberWithCommas(data.d[key].toFixed(2)) + '</td></tr>';
 	$('#stattable tr').first().after(html);
 }
 });
