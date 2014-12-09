@@ -17,10 +17,10 @@ public class MultiStationDao {
 		private Statement stmt = null;
 		
 		public Map getOrders() throws Exception{
-			return getOrders("60003760");
+			return getOrders("60003760", "60008494");
 		}
 		
-		public Map getOrders( String stationID) throws Exception {
+		public Map getOrders( String stationBUYID, String stationSELLID) throws Exception {
 			Map margins = new HashMap();
 			
 			Class.forName("com.mysql.jdbc.Driver");
@@ -28,13 +28,11 @@ public class MultiStationDao {
 					+ "user=emdr&password=emdrpasswd");
 			
 			
-			String query = "SELECT items_selling.type_id AS SellID,"+
-							" MIN(items_selling.price) - MAX(items_buying.price) AS Margin"+
-							" FROM items_selling"+
-							" JOIN items_buying ON items_selling.type_id = items_buying.type_id AND items_selling.station_id = items_buying.station_id"+
-							" JOIN items_history ON items_selling.type_id = items_history.type_id" +
-							" WHERE items_selling.station_id = " + stationID + " AND items_history.quantity > 200 AND items_history.date = '2014-09-09'"+
-							" GROUP BY items_selling.type_id ORDER BY Margin DESC LIMIT 10;";
+			String query = "SELECT items_selling.type_id AS SellID, MIN(items_selling.price) - MAX(items_buying.price) AS Margin "+
+							" FROM items_selling JOIN items_buying ON items_selling.type_id = items_buying.type_id "+
+							" JOIN items_history ON items_selling.type_id = items_history.type_id "+
+							" WHERE items_selling.station_id = "+ stationSELLID +" AND items_buying.station_id = "+ stationBUYID +" AND items_history.quantity > 200 "+
+							" AND items_history.date = '2014-09-09' GROUP BY items_selling.type_id ORDER BY Margin DESC LIMIT 10;";
 			
 			//System.out.println(query);
 			stmt = conn.createStatement();
