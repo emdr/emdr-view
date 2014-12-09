@@ -2,7 +2,7 @@
 <html lang="us">
 <head>
 <meta charset="utf-8">
-<title>Margin</title>
+<title>emdr</title>
 <link href="jquery-ui.css" rel="stylesheet">
 <style>
 body {
@@ -56,14 +56,27 @@ select {
 }
 </style>
 <script src="external/jquery/jquery.js"></script>
+<link rel="stylesheet" href="external/jquery/themes/default/style.min.css" />
+<script src="external/jquery/jstree.js"></script>
 </head>
 <body>
+<script>
+var items = {};
+$.ajax({    
+	type: "GET",
+	url: "Items",
+	dataType: "json", 
+	success: function(response){
+		items.d = response;
+	}
+	});
+</script>
 <!-- Tabs -->
 <div id="tabs">
 	<ul>
-		<li><a href="#tabs-1">margins</a></li>
-		<li><a href="#tabs-2">station to station</a></li>
-		<li><a href="#tabs-3">history trends</a></li>
+		<li><a href="#tabs-1">in station</a></li>
+		<li><a href="#tabs-2">multi station</a></li>
+		<li><a href="#tabs-3">item history</a></li>
 		<li><a href="Stations">history trends</a></li>
 	</ul>
 	<div id="tabs-1"><table id="martable">
@@ -73,7 +86,7 @@ select {
     </tr>
 </table>
 <script>
-$.ajax({    
+$.ajax({
 type: "GET",
 url: "Analysis",
 dataType: "json", 
@@ -82,13 +95,26 @@ success: function(response){
 	data.d = response;
 	var html = '';
 	for(var key in data.d)
-	    html += '<tr><td>' + key + '</td><td>' + data.d[key].toFixed(2) + '</td></tr>';
+	    html += '<tr><td>' + items.d[key] + '</td><td>' + data.d[key].toFixed(2) + '</td></tr>';
 	$('#martable tr').first().after(html);
 }
 });
 </script></div>
 	<div id="tabs-2">Phasellus mattis tincidunt nibh. Cras orci urna, blandit id, pretium vel, aliquet ornare, felis. Maecenas scelerisque sem non nisl. Fusce sed lorem in enim dictum bibendum.</div>
-	<div id="tabs-3">Nam dui erat, auctor a, dignissim quis, sollicitudin eu, felis. Pellentesque nisi urna, interdum eget, sagittis et, consequat vestibulum, lacus. Mauris porttitor ullamcorper augue.</div>
+	<div id="tabs-3"><div id="jstree_items_div"><script>
+$.ajax({
+type: "GET",
+url: "ItemTree",
+dataType: "json", 
+success: function(response){
+	var treedata = { 'core' : {
+	    'data' : response
+	}};
+	$('#jstree_items_div').jstree(treedata);
+}
+});
+</script></div>
+</div>
 </div>
 <script src="jquery-ui.js"></script>
 
